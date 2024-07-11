@@ -56,6 +56,7 @@ name = "calculator-firmware"
 version = "0.1.0"
 dependencies = [
  "alloc-cortex-m",
+ "caldyn",
  "cortex-m",
  "cortex-m-rt",
  "debouncr",
@@ -66,6 +67,13 @@ dependencies = [
  "panic-rtt-target",
  "rtt-target",
  "stm32f1xx-hal",
+]
+
+[[package]]
+name = "caldyn"
+version = "0.4.3"
+dependencies = [
+ "libm",
 ]
 
 [[package]]

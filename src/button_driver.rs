@@ -10,9 +10,9 @@ const COLUMNS: usize = 3;
 
 const BUTTONS: [[ButtonClick; COLUMNS]; ROWS] = [
     [
-        ButtonClick::Digit1,
-        ButtonClick::Digit2,
-        ButtonClick::Digit3,
+        ButtonClick::Digit7,
+        ButtonClick::Digit8,
+        ButtonClick::Digit9,
     ],
     [
         ButtonClick::Digit4,
@@ -20,22 +20,18 @@ const BUTTONS: [[ButtonClick; COLUMNS]; ROWS] = [
         ButtonClick::Digit6,
     ],
     [
-        ButtonClick::Digit7,
-        ButtonClick::Digit8,
-        ButtonClick::Digit9,
+        ButtonClick::Digit1,
+        ButtonClick::Digit2,
+        ButtonClick::Digit3,
+    ],
+    [ButtonClick::Digit0, ButtonClick::Dot, ButtonClick::Answer],
+    [
+        ButtonClick::Add,
+        ButtonClick::Subtract,
+        ButtonClick::LeftParen,
     ],
     [
-        ButtonClick::Ignored,
-        ButtonClick::Ignored,
-        ButtonClick::Ignored,
-    ],
-    [
-        ButtonClick::Ignored,
-        ButtonClick::Ignored,
-        ButtonClick::Ignored,
-    ],
-    [
-        ButtonClick::Ignored,
+        ButtonClick::RightParen,
         ButtonClick::Ignored,
         ButtonClick::Ignored,
     ],
@@ -75,6 +71,12 @@ pub enum ButtonClick {
     Digit7,
     Digit8,
     Digit9,
+    Answer,
+    Add,
+    Subtract,
+    Dot,
+    LeftParen,
+    RightParen,
 }
 
 impl ButtonDriver {
@@ -82,8 +84,7 @@ impl ButtonDriver {
         col_pins: Vec<Box<dyn OutputPin<Error = Infallible>>>,
         row_pins: Vec<Box<dyn InputPin<Error = Infallible>>>,
     ) -> Self {
-        let mut debouncers =
-            core::array::from_fn(|_i| core::array::from_fn(|_i| debounce_16(false)));
+        let debouncers = core::array::from_fn(|_i| core::array::from_fn(|_i| debounce_16(false)));
         Self {
             col_pins,
             row_pins,

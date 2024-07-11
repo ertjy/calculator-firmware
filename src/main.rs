@@ -13,6 +13,7 @@ use core::convert::Infallible;
 use panic_rtt_target as _;
 
 use calculator_firmware_library::button_driver::ButtonDriver;
+use calculator_firmware_library::math_driver::MathDriver;
 use cortex_m_rt::entry;
 use debouncr::{debounce_16, debounce_stateful_16};
 use embedded_hal::digital::v2::{InputPin, OutputPin};
@@ -74,12 +75,12 @@ fn main() -> ! {
         Box::new(gpioc.pc11.into_pull_down_input(&mut gpioc.crh)),
     ];
     let mut button_driver = ButtonDriver::new(col_pins, row_pins);
+    let mut math_driver = MathDriver::new();
 
     loop {
         let clicks = button_driver.get_clicks();
-
-        if !clicks.is_empty() {
-            rprintln!("{:?}", clicks);
+        for click in clicks.iter() {
+            math_driver.handle_click(click);
         }
     }
 }
